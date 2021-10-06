@@ -5,10 +5,13 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
@@ -21,9 +24,15 @@ public class User {
 	@Id
 	@Column
 	private String userId;
+
 	@Column
 	private String userName;
+
+	@JsonProperty(access = Access.WRITE_ONLY)
 	@Column
 	private String password;
+
+	@Column
+	private String userType;
 
 }

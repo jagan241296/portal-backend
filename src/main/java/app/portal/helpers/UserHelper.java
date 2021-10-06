@@ -17,6 +17,7 @@ public class UserHelper {
 		var userDto = new UserDto();
 		userDto.setUserName(user.getUserName());
 		userDto.setUserId(user.getUserId());
+		userDto.setUserType(user.getUserType());
 
 		return userDto;
 	}
