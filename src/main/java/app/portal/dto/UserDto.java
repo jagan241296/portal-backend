@@ -10,10 +10,12 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 public class UserDto {
-	
+
 	private String userId;
 	private String userName;
 	private String password;
 	private String userType;
 	private boolean loginValid;
+	private String firstName;
+	private String lastName;
 }

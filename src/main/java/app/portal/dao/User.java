@@ -24,15 +24,15 @@ public class User {
 	@Id
 	@Column
 	private String userId;
-
 	@Column
 	private String userName;
-
 	@JsonProperty(access = Access.WRITE_ONLY)
 	@Column
 	private String password;
-
 	@Column
 	private String userType;
-
+	@Column
+	private String firstName;
+	@Column
+	private String lastName;
 }

@@ -5,7 +5,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import org.apache.commons.lang3.StringUtils;
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Getter
 @Slf4j
+@Transactional
 public class TrainingScheduleService {
 
 	@Autowired
@@ -25,24 +27,34 @@ public class TrainingScheduleService {
 	@Autowired
 	private TrainingPlanRepository trainingPlanRepository;
 
-	public List<TrainingPlanDto> getTrainingSchedulePlan(String calendarYear) {
-		if (StringUtils.isBlank(calendarYear) || !StringUtils.isNumeric(calendarYear)) {
-			log.error("Input year is empty. Cannot get the Trainign plan");
+	public List<TrainingPlanDto> getTrainingSchedulePlan(Integer calendarYear) {
+		if (calendarYear == null || calendarYear <= 0) {
+			log.error("Input year is invalid Cannot get the Trainign plan");
 			return Collections.emptyList();
 		}
 
-		var entries = getTrainingPlanRepository().findByCalendarYear(calendarYear);
+		var entries = getTrainingPlanRepository().findByCalendarYearOrderByDateAscStartTimeAsc(calendarYear);
 		return entries.stream().filter(Objects::nonNull).map(i -> getTrainingPlanHelper().convertEntityToDto(i))
 				.collect(Collectors.toList());
 	}
 
-	public boolean addTrainingPlanAsJson(List<TrainingPlanDto> trainingPlanDtoList) {
+	public boolean addTrainingPlanAsJson(TrainingPlanDto trainingPlanDto) {
 		try {
-			trainingPlanDtoList.stream().filter(i -> StringUtils.isNotBlank(i.getCalendarYear())).findFirst()
-					.ifPresent(i -> getTrainingPlanRepository().deleteByCalendarYear(i.getCalendarYear()));
+			if (trainingPlanDto == null)
+				return false;
 
-			trainingPlanDtoList.stream().map(i -> getTrainingPlanHelper().convertDtoToEntity(i))
-					.forEach(i -> getTrainingPlanRepository().save(i));
+			// check if the entry is already present
+			var existingEntry = getTrainingPlanRepository().findByData(trainingPlanDto.getCalendarYear(),
+					trainingPlanDto.getDate(), trainingPlanDto.getStartTime(), trainingPlanDto.getEndTime());
+
+			if (existingEntry.isPresent()) {
+				log.error("Record already present in DB for given Data: " + trainingPlanDto);
+				return false;
+			}
+
+			// Else add new entry in DB
+			var planEntity = getTrainingPlanHelper().convertDtoToEntity(trainingPlanDto);
+			getTrainingPlanRepository().save(planEntity);
 		} catch (RuntimeException e) {
 			log.error("Error while uploading the Plan: " + e);
 			return false;

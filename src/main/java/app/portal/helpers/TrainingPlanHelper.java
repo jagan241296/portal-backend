@@ -15,15 +15,16 @@ public class TrainingPlanHelper {
 			return new TrainingPlanDto();
 
 		var trainingPlanDto = new TrainingPlanDto();
-		trainingPlan.setCalendarYear(trainingPlan.getCalendarYear());
-		trainingPlan.setDate(trainingPlan.getDate());
-		trainingPlan.setTime(trainingPlan.getTime());
-		trainingPlan.setTrainingHead(trainingPlan.getTrainingHead());
-		trainingPlan.setSession(trainingPlan.getSession());
-		trainingPlan.setPresenter(trainingPlan.getPresenter());
-		trainingPlan.setLocation(trainingPlan.getLocation());
-		trainingPlan.setSessionMaterial(trainingPlan.getSessionMaterial());
-		trainingPlan.setParticipants(trainingPlan.getParticipants());
+		trainingPlanDto.setCalendarYear(trainingPlan.getCalendarYear());
+		trainingPlanDto.setDate(trainingPlan.getDate());
+		trainingPlanDto.setStartTime(trainingPlan.getStartTime());
+		trainingPlanDto.setEndTime(trainingPlan.getEndTime());
+		trainingPlanDto.setTrainingHead(trainingPlan.getTrainingHead());
+		trainingPlanDto.setSession(trainingPlan.getSession());
+		trainingPlanDto.setPresenter(trainingPlan.getPresenter());
+		trainingPlanDto.setLocation(trainingPlan.getLocation());
+		trainingPlanDto.setSessionMaterial(trainingPlan.getSessionMaterial());
+		trainingPlanDto.setParticipants(trainingPlan.getParticipants());
 
 		return trainingPlanDto;
 	}
@@ -35,7 +36,8 @@ public class TrainingPlanHelper {
 		var trainingPlan = new TrainingPlan();
 		trainingPlan.setCalendarYear(dto.getCalendarYear());
 		trainingPlan.setDate(dto.getDate());
-		trainingPlan.setTime(dto.getTime());
+		trainingPlan.setStartTime(dto.getStartTime());
+		trainingPlan.setEndTime(dto.getEndTime());
 		trainingPlan.setTrainingHead(dto.getTrainingHead());
 		trainingPlan.setSession(dto.getSession());
 		trainingPlan.setPresenter(dto.getPresenter());

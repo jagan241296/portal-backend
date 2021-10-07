@@ -25,12 +25,12 @@ public class TrainingScheduleController {
 	private TrainingScheduleService trainingScheduleService;
 
 	@GetMapping("/get-training-plan")
-	public List<TrainingPlanDto> getTrainingSchedulePlan(@RequestParam("year") String calendarYear) {
+	public List<TrainingPlanDto> getTrainingSchedulePlan(@RequestParam("calendarYear") Integer calendarYear) {
 		return getTrainingScheduleService().getTrainingSchedulePlan(calendarYear);
 	}
 
 	@PostMapping("/add-training-plan")
-	public boolean addTrainingPlanAsJson(@RequestBody List<TrainingPlanDto> trainingPlanDtoList) {
+	public boolean addTrainingPlanAsJson(@RequestBody TrainingPlanDto trainingPlanDtoList) {
 		return getTrainingScheduleService().addTrainingPlanAsJson(trainingPlanDtoList);
 	}
 }

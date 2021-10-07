@@ -18,7 +18,9 @@ public class UserHelper {
 		userDto.setUserName(user.getUserName());
 		userDto.setUserId(user.getUserId());
 		userDto.setUserType(user.getUserType());
-
+		userDto.setFirstName(user.getFirstName());
+		userDto.setLastName(user.getLastName());
+		
 		return userDto;
 	}
 }

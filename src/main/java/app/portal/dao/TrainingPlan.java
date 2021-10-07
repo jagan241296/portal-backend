@@ -1,5 +1,8 @@
 package app.portal.dao;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,13 +26,15 @@ public class TrainingPlan {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column
-	private String id;
+	private long id;
 	@Column(name = "calendar_year")
-	private String calendarYear;
+	private int calendarYear;
 	@Column(name = "training_date")
-	private String date;
-	@Column(name = "training_time")
-	private String time;
+	private LocalDate date;
+	@Column(name = "start_time")
+	private LocalTime startTime;
+	@Column(name = "end_time")
+	private LocalTime endTime;
 	@Column(name = "training_head")
 	private String trainingHead;
 	@Column(name = "session")

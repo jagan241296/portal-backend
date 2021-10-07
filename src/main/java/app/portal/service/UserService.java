@@ -41,4 +41,38 @@ public class UserService {
 		response.setLoginValid(true);
 		return response;
 	}
+
+	public boolean updateProfileDetails(UserDto userDto) {
+		if (userDto == null || StringUtils.isBlank(userDto.getUserId()))
+			return false;
+
+		var existingUser = getUserRepository().findById(userDto.getUserId());
+		if (existingUser.isEmpty()) {
+			log.error("Cannot find user with given ID. Unable to update the profile details");
+			return false;
+		}
+
+		try {
+			var userDao = existingUser.get();
+			userDao.setFirstName(userDto.getFirstName());
+			userDao.setLastName(userDto.getLastName());
+			getUserRepository().save(userDao);
+		} catch (RuntimeException e) {
+			log.error("Error while updating the profile details: " + e);
+			return false;
+		}
+		return true;
+	}
+
+	public UserDto getProfileDetails(String employeeId) {
+		if (StringUtils.isBlank(employeeId))
+			return null;
+
+		var employeeDetailsOpt = getUserRepository().findById(employeeId);
+		if (employeeDetailsOpt.isEmpty()) {
+			log.error("Cannot find profile details for given ID: " + employeeId);
+			return null;
+		}
+		return getUserHelper().convertUserEntityToDto(employeeDetailsOpt.get());
+	}
 }
