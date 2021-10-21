@@ -19,7 +19,7 @@ import lombok.Getter;
 @RestController
 @Getter
 @CrossOrigin
-@RequestMapping("rest/feedback")
+@RequestMapping("rest/question")
 public class QuestionBankController {
 
 	@Autowired

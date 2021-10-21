@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import app.portal.dto.QuestionListDto;
 import app.portal.dto.UserDto;
 import app.portal.service.UserService;
 import lombok.Getter;
@@ -36,5 +37,18 @@ public class UserController {
 	@GetMapping("/getprofile")
 	public UserDto getProfileDetails(@RequestParam("id") String employeeId) {
 		return getUserService().getProfileDetails(employeeId);
+	}
+
+	@GetMapping("/get-feedback-questions")
+	public QuestionListDto getFeedbackQuestions(@RequestParam("userId") String userId) {
+		return getUserService().getFeedbackQuestionByuser(userId);
+	}
+
+	@PostMapping("/save-feedback")
+	public boolean saveUserFeedback(@RequestBody QuestionListDto questionListDto) {
+		if (questionListDto == null)
+			return false;
+
+		return getUserService().saveUserFeedback(questionListDto.getQuestions());
 	}
 }

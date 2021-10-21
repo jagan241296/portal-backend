@@ -29,6 +29,10 @@ public class User {
 	@JsonProperty(access = Access.WRITE_ONLY)
 	@Column
 	private String password;
+	
+	/*
+	 * Type: 0 - Fresher / 1 - Evaluator
+	 */
 	@Column
 	private String userType;
 	@Column

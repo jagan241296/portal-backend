@@ -2,14 +2,11 @@ package app.portal.dto;
 
 import java.io.Serializable;
 
-import lombok.Getter;
+import app.portal.dao.QuestionCategory;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
-@Setter
-@Getter
-@ToString
+@Data
 @NoArgsConstructor
 public class QuestionCategoryDto implements Serializable {
 
@@ -17,4 +14,11 @@ public class QuestionCategoryDto implements Serializable {
 
 	private Long categoryId;
 	private String categoryName;
+
+	public QuestionCategoryDto(QuestionCategory categoryDao) {
+		if (categoryDao != null) {
+			this.categoryId = categoryDao.getCategoryId();
+			this.categoryName = categoryDao.getCategoryName();
+		}
+	}
 }
